@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, render_template
 from werkzeug import secure_filename
 import codecs
 import markowitz as mk
-import csv
+import pandas
 
 app = Flask(__name__)
 
@@ -24,6 +24,13 @@ def upload_file():
         if output_type == 'json':
             return alloc
         else:
+
+            """ TODO
+            
+            how to return as .csv file?
+
+            """
+
             output = [[], []]
             for i in alloc:
                 output[0] += [i]

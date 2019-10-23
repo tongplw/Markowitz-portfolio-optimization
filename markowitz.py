@@ -4,7 +4,6 @@ import numpy as np
 from cvxpy import *
 # from posdef import nearestPD
 
-
 class Optimizer(object):
 
     def __init__(self, file):
@@ -71,6 +70,12 @@ class Optimizer(object):
             except ValueError as e:
                 pass
             # print(expected_ret)
+            
+            """ TODO
+            
+            can not calculate the SD
+
+            """
 
             # sd = 0
             # for cov_col, weight_1 in zip(covariance, w):
@@ -79,6 +84,7 @@ class Optimizer(object):
             # # print(sd)
             # return (expected_ret - interest_rate/12) / square(sd)
             sd = 1
+            
             return (expected_ret - interest_rate/12) / sqrt(sd)
 
         obj = Maximize(cal_sharp_ratio(w))
