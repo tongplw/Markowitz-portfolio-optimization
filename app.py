@@ -3,6 +3,7 @@ from werkzeug import secure_filename
 import codecs
 import markowitz as mk
 import pandas
+from flask_csv import send_csv
 
 app = Flask(__name__)
 
@@ -21,21 +22,16 @@ def upload_file():
         alloc = opt.portfolio_alloc
                 
         output_type = request.form.get('select')
+
         if output_type == 'json':
             return alloc
+
         else:
-
-            """ TODO
-            
-            how to return as .csv file?
-
-            """
-
-            output = [[], []]
-            for i in alloc:
-                output[0] += [i]
-                output[1] += [str(alloc[i])]
-            return ','.join(output[0]) + '\n' + ','.join(output[1])
+            return send_csv(
+                [{"stock": i, "weight": alloc[i]} for i in alloc],
+                "test.csv",
+                ["stock", "weight"]
+            )
 
 if __name__ == '__main__':
     app.run(debug=True)

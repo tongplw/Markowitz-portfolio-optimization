@@ -2,7 +2,6 @@ import math
 import pandas as pd
 import numpy as np
 from cvxpy import *
-# from posdef import nearestPD
 
 class Optimizer(object):
 
@@ -77,15 +76,15 @@ class Optimizer(object):
 
             """
 
-            # sd = 0
-            # for cov_col, weight_1 in zip(covariance, w):
-            #     for weight_2, cov_val in zip(w, covariance[cov_col]):
-            #         sd += weight_2 * cov_val * weight_1
-            # # print(sd)
-            # return (expected_ret - interest_rate/12) / square(sd)
-            sd = 1
-            
-            return (expected_ret - interest_rate/12) / sqrt(sd)
+            sd = 0
+            for cov_col, weight_1 in zip(covariance, w):
+                for weight_2, cov_val in zip(w, covariance[cov_col]):
+                    sd += weight_2 * cov_val * weight_1
+            # print(sd)
+            return (expected_ret - interest_rate/12) + sqrt(sd)
+
+            # sd = 1
+            # return (expected_ret - interest_rate/12) / sqrt(sd)
 
         obj = Maximize(cal_sharp_ratio(w))
         prob = Problem(obj, constraints)
