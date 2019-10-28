@@ -7,7 +7,7 @@ from flask_csv import send_csv
 
 app = Flask(__name__)
 
-@app.route('/upload', methods=['GET'])
+@app.route('/', methods=['GET'])
 def upload():
    return render_template('upload.html')
 
